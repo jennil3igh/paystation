@@ -58,4 +58,21 @@ public class PayStationImpl implements PayStation {
     private void reset() {
         timeBought = insertedSoFar = 0;
     }
+    
+    
+    /*returns the total amount of money collected 
+    by the paystation since the last call and empties 
+    it, setting the total to zero. Note that money 
+    is only collected after a call to buy*/
+    @Override
+    public int empty(){
+        //the total amount of money collected since last call
+        //only add if you buy
+         int lastCall = insertedSoFar;
+         
+         //resests the total amount to zero
+        reset();
+         
+        return 0;
+    }
 }
