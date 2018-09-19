@@ -5,11 +5,9 @@ package paystation.domain;
  *
  * Responsibilities:
  *
- * 1) Accept payment; 
- * 2) Calculate parking time based on payment; 
- * 3) Know earning, parking time bought; 
- * 4) Issue receipts; 
- * 5) Handle buy and cancel events.
+ * 1) Accept payment; 2) Calculate parking time based on payment; 3) Know
+ * earning, parking time bought; 4) Issue receipts; 5) Handle buy and cancel
+ * events.
  *
  * This source code is from the book "Flexible, Reliable Software: Using
  * Patterns and Agile Development" published 2010 by CRC Press. Author: Henrik B
@@ -20,17 +18,25 @@ package paystation.domain;
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
 public class PayStationImpl implements PayStation {
-    
+
     private int insertedSoFar;
     private int timeBought;
+    //all coins inserted bought
+    private int totalBought;
+    //the total amount of money collected since last call
+    //only add if you buy
+    private int lastCall;
 
     @Override
     public void addPayment(int coinValue)
             throws IllegalCoinException {
         switch (coinValue) {
-            case 5: break;
-            case 10: break;
-            case 25: break;
+            case 5:
+                break;
+            case 10:
+                break;
+            case 25:
+                break;
             default:
                 throw new IllegalCoinException("Invalid coin: " + coinValue);
         }
@@ -46,6 +52,7 @@ public class PayStationImpl implements PayStation {
     @Override
     public Receipt buy() {
         Receipt r = new ReceiptImpl(timeBought);
+        totalBought += insertedSoFar;
         reset();
         return r;
     }
@@ -54,25 +61,21 @@ public class PayStationImpl implements PayStation {
     public void cancel() {
         reset();
     }
-    
+
     private void reset() {
         timeBought = insertedSoFar = 0;
     }
-    
-    
+
     /*returns the total amount of money collected 
     by the paystation since the last call and empties 
     it, setting the total to zero. Note that money 
     is only collected after a call to buy*/
     @Override
-    public int empty(){
-        //the total amount of money collected since last call
-        //only add if you buy
-         int lastCall = insertedSoFar;
-         
-         //resests the total amount to zero
+    public int empty() {
+        
+        //resests the total amount to zero
         reset();
-         
-        return 0;
+
+        return totalBought;
     }
 }

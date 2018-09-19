@@ -139,12 +139,37 @@ public class PayStationImplTest {
                 10, ps.readDisplay());
     }
     
+    @Test
+    public void emptyReturnsTotalNoBuy()
+            throws IllegalCoinException {
+        ps.addPayment(5);
+        ps.addPayment(5);
+        ps.addPayment(5);
+        assertEquals(0, ps.empty());
+    
+    }
+    
+    @Test
     public void emptyReturnsTotal()
             throws IllegalCoinException {
         ps.addPayment(5);
         ps.addPayment(5);
         ps.addPayment(5);
+        ps.buy();
         assertEquals(15, ps.empty());
     
     }
+    
+    @Test
+    public void emptyReturnsTotalAfterBuy()
+            throws IllegalCoinException {
+        ps.addPayment(5);
+        ps.addPayment(5);
+        ps.buy();
+        ps.addPayment(5);
+        ps.buy();
+        assertEquals(15, ps.empty());
+    
+    }
+    
 }
