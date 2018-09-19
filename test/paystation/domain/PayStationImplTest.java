@@ -172,4 +172,28 @@ public class PayStationImplTest {
     
     }
     
+    @Test
+    public void emptyDoesNotReturnCancelations()
+            throws IllegalCoinException {
+        ps.addPayment(5);
+        ps.addPayment(5);
+        ps.buy();
+        ps.addPayment(5);
+        ps.cancel();
+        assertEquals(10, ps.empty());
+        
+    }
+    
+    @Test
+    public void emptyWillReturnZero()
+            throws IllegalCoinException {
+        ps.addPayment(5);
+        ps.addPayment(5);
+        ps.buy();
+        ps.addPayment(5);
+        ps.cancel();
+        assertEquals(10, ps.empty());
+        assertEquals(0, ps.empty());
+    }
+    
 }

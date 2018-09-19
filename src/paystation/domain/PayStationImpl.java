@@ -72,10 +72,12 @@ public class PayStationImpl implements PayStation {
     is only collected after a call to buy*/
     @Override
     public int empty() {
+        int cents = totalBought;
         
+        totalBought = 0;
         //resests the total amount to zero
         reset();
 
-        return totalBought;
+        return cents;
     }
 }
