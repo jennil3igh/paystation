@@ -31,16 +31,23 @@ public class PayStationImpl implements PayStation {
     private int lastCall;
     //coin mapping
     private Map<Integer, Integer> coinMap;
+    //coins
+    private int nickleCount;
+    private int dimeCount;
+    private int quarterCount;
 
     @Override
     public void addPayment(int coinValue)
             throws IllegalCoinException {
         switch (coinValue) {
             case 5:
+                nickleCount++;
                 break;
             case 10:
+                dimeCount++;
                 break;
             case 25:
+                quarterCount++;
                 break;
             default:
                 throw new IllegalCoinException("Invalid coin: " + coinValue);
@@ -65,14 +72,20 @@ public class PayStationImpl implements PayStation {
     @Override
     public Map<Integer, Integer> cancel() {
         Map<Integer, Integer> coinMap = new HashMap<Integer, Integer>();
-        coinMap.putIfAbsent(insertedSoFar, 1);
+        if (nickleCount != 0){
+            coinMap.put(5, nickleCount);
+        } if (dimeCount != 0){
+            coinMap.put(10, dimeCount);
+        } if (quarterCount != 0){
+            coinMap.put(25, quarterCount);
+        }
         
         reset();
         return coinMap;
     }
 
     private void reset() {
-        timeBought = insertedSoFar = 0;
+        timeBought = insertedSoFar = nickleCount = dimeCount = quarterCount = 0;
     }
 
     /*returns the total amount of money collected 

@@ -209,4 +209,31 @@ public class PayStationImplTest {
         assertEquals(mapOne, ps.cancel());
     }
     
+    @Test
+    public void cancelMultipleCoinsEntered()
+            throws IllegalCoinException {
+        
+        ps.addPayment(5);
+        ps.addPayment(10);
+        ps.addPayment(25);
+        final Map<Integer, Integer> mapTwo = new HashMap<Integer, Integer>(){
+            {put(5,1);
+            put(10,1);  
+            put(25,1);}  
+            };
+        assertEquals(mapTwo, ps.cancel());
+    }
+    
+    @Test
+    public void cancelNoCoinsEntered()
+            throws IllegalCoinException {
+        
+        final Map<Integer, Integer> mapTwo = new HashMap<Integer, Integer>(){
+            {put(5,1);
+            put(10,1);  
+            put(25,1);}  
+            };
+        assertEquals(mapTwo, ps.cancel());
+    }
+    
 }
