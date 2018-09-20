@@ -1,5 +1,6 @@
 package paystation.domain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,6 +29,8 @@ public class PayStationImpl implements PayStation {
     //the total amount of money collected since last call
     //only add if you buy
     private int lastCall;
+    //coin mapping
+    private Map<Integer, Integer> coinMap;
 
     @Override
     public void addPayment(int coinValue)
@@ -61,9 +64,11 @@ public class PayStationImpl implements PayStation {
 
     @Override
     public Map<Integer, Integer> cancel() {
-        reset();
+        Map<Integer, Integer> coinMap = new HashMap<Integer, Integer>();
+        coinMap.putIfAbsent(insertedSoFar, 1);
         
-        return;
+        reset();
+        return coinMap;
     }
 
     private void reset() {
