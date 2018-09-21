@@ -214,10 +214,11 @@ public class PayStationImplTest {
             throws IllegalCoinException {
         
         ps.addPayment(5);
+        ps.addPayment(5);
         ps.addPayment(10);
         ps.addPayment(25);
         final Map<Integer, Integer> mapTwo = new HashMap<Integer, Integer>(){
-            {put(5,1);
+            {put(5,2);
             put(10,1);  
             put(25,1);}  
             };
@@ -225,15 +226,33 @@ public class PayStationImplTest {
     }
     
     @Test
-    public void cancelNoCoinsEntered()
+    public void cancelClearMap()
             throws IllegalCoinException {
-        
-        final Map<Integer, Integer> mapTwo = new HashMap<Integer, Integer>(){
-            {put(5,1);
-            put(10,1);  
+        ps.addPayment(5);
+        ps.addPayment(25);
+        final Map<Integer, Integer> mapThree = new HashMap<Integer, Integer>(){
+            {put(5,1); 
             put(25,1);}  
             };
-        assertEquals(mapTwo, ps.cancel());
+        final Map<Integer, Integer> mapFour = new HashMap<Integer, Integer>();
+        assertEquals(mapThree, ps.cancel());
+        assertEquals(mapFour, ps.cancel());
+    }
+    
+    @Test
+    public void buyClearMap()
+            throws IllegalCoinException {
+        ps.addPayment(5);
+        ps.addPayment(25);
+        /*final Map<Integer, Integer> mapThree = new HashMap<Integer, Integer>(){
+            {put(5,1); 
+            put(25,1);}  
+            };*/
+        ps.buy();
+        
+        final Map<Integer, Integer> mapFour = new HashMap<Integer, Integer>();
+        //assertEquals(mapThree, ps.cancel());
+        assertEquals(mapFour, ps.cancel());
     }
     
 }
