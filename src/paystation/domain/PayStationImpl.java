@@ -42,23 +42,20 @@ public class PayStationImpl implements PayStation {
         switch (coinValue) {
             case 5:
                 nickleCount++;
+                coinMap.put(5, nickleCount);
                 break;
             case 10:
                 dimeCount++;
+                coinMap.put(10, dimeCount);
                 break;
             case 25:
                 quarterCount++;
+                coinMap.put(25, quarterCount);
                 break;
             default:
                 throw new IllegalCoinException("Invalid coin: " + coinValue);
         }
-         if (nickleCount != 0){
-            coinMap.put(5, nickleCount);
-        } if (dimeCount != 0){
-            coinMap.put(10, dimeCount);
-        } if (quarterCount != 0){
-            coinMap.put(25, quarterCount);
-        }
+         
         insertedSoFar += coinValue;
         timeBought = insertedSoFar / 5 * 2;
     }
